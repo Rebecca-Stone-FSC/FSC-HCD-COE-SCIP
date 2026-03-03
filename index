@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCIP User Journey Map - VA Financial Services Center UX Research</title>
+<meta name="description" content="Strategic Capital Investment Planning system user journey map covering 9 stages of the annual capital planning cycle. VISN-level user research from the VA Financial Services Center.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/*
+  VA.gov Design System - SCIP User Journey Map
+  Colors: All from design.va.gov/foundation/color-palette (fetched 2026-03-01)
+  Typography: Source Sans 3 (sans), Bitter (serif header), Roboto Mono (mono)
+  Accessibility: WCAG 2.1 - AAA where applicable, AA minimum throughout
+  Section 508: Compliant - verified via automated + manual audit
+
+  All contrast ratios verified (4.5:1 AA / 7:1 AAA):
+  ─ White on #162e51 (navy):           13.60:1  AAA
+  ─ #d9e8f6 on #162e51:                10.90:1  AAA
+  ─ #dfe1e2 on #162e51:                10.37:1  AAA
+  ─ #d9e8f6 on #1a4480 (section hdr):   7.71:1  AAA
+  ─ #1b1b1b on #ffffff:                17.22:1  AAA
+  ─ #1b1b1b on #f0f0f0:                15.11:1  AAA
+  ─ #154c21 on #ecf3ec (green AAA):     8.91:1  AAA
+  ─ #1b1b1b on #faf3d1 (gold/warn):    15.42:1  AAA
+  ─ #6f3331 on #f4e3db (red/pain):      7.68:1  AAA
+  ─ #6f3331 on #f8dfe2 (crit):          7.59:1  AAA
+  ─ #162e51 on #d9e8f6 (info):         10.90:1  AAA
+  ─ #162e51 on #e7f6f8 (opp):          12.27:1  AAA
+  ─ #6f3331 on #e7f6f8 (opp-hi):        8.63:1  AAA
+  ─ #3d4551 on #dfe1e2 (neutral):       7.38:1  AAA
+  ─ White on #244e5e (opp label):        9.03:1  AAA
+  ─ #face00 on #162e51 (focus ring):     9.00:1  AAA (UI 3:1 req)
+*/
+
+/* ── RESET ──────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* VA primary blue */
+  --va-navy:        #162e51;
+  --va-navy-mid:    #1a4480;
+  --va-blue:        #005ea2;
+  --va-blue-lt:     #d9e8f6;
+
+  /* VA gold accent (vads-color-va-accent / vads-main-menu-color-border-top) */
+  --va-gold-accent: #8a7237;
+
+  /* VA success / green */
+  --va-green-dkr:   #154c21;
+  --va-green-dk:    #216e1f;
+  --va-green-mid:   #008817;
+  --va-green-lt:    #ecf3ec;
+  --va-green-bdr:   #008817;
+
+  /* VA error / red */
+  --va-red-dk:      #6f3331;
+  --va-red-brt:     #d54309;
+  --va-red-lt:      #f4e3db;
+  --va-sec-lt:      #f8dfe2;
+
+  /* VA warning / gold */
+  --va-gold-dk:     #936f38;
+  --va-gold-brt:    #ffbe2e;
+  --va-gold-lt:     #faf3d1;
+
+  /* VA info / cyan */
+  --va-cyan-dk:     #2e6276;
+  --va-cyan-lt:     #e7f6f8;
+  --va-opp-bg:      #244e5e;
+
+  /* VA base / gray */
+  --va-ink:         #1b1b1b;
+  --va-gray-dk:     #3d4551;
+  --va-gray-md:     #565c65;
+  --va-gray-lt:     #dfe1e2;
+  --va-gray-pale:   #f0f0f0;
+  --va-white:       #ffffff;
+
+  /* VA focus */
+  --va-focus:       #face00;
+
+  /* Typography - VA design system */
+  --font-sans:  'Source Sans 3', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: 'Bitter', Georgia, 'Times New Roman', serif;
+  --font-mono:  'Roboto Mono', 'Courier New', monospace;
+
+  /* Grid */
+  --col-label:  180px;
+  --col-stage:  216px;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--va-ink);
+  background: var(--va-navy);
+}
+
+/* ── SKIP LINK ─────────────────────────────────────────────────────────── */
+.skip-link {
+  position: absolute; top: -120px; left: 1rem; z-index: 10000;
+  background: var(--va-white); color: var(--va-navy);
+  padding: 0.75rem 1.25rem; font-family: var(--font-sans);
+  font-size: 1rem; font-weight: 700; text-decoration: underline;
+  border: 3px solid var(--va-navy); border-radius: 4px;
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: 1rem; }
+
+/* ── SCREEN READER ONLY ────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ── FOCUS (WCAG 2.4.7 / 2.4.11 AAA) ──────────────────────────────────── */
+*:focus-visible {
+  outline: 3px solid var(--va-focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.map-scroll:focus-visible { outline-offset: -3px; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   HEADER - VA.gov official header pattern
+   Uses gold accent top border (vads-color-va-accent), dark navy background,
+   Bitter serif for title (VA's official serif face), and the US gov't banner
+   ══════════════════════════════════════════════════════════════════════════ */
+.site-header {
+  background: var(--va-navy);
+  border-top: 6px solid var(--va-gold-accent);  /* VA gold accent bar */
+}
+
+/* Header content area */
+.hd-content {
+  padding: 1.75rem 3.5rem 1.75rem;
+  padding: 2rem 3.5rem 0;
+  border-bottom: none;
+}
+
+/* VA eyebrow - mono uppercase label above h1 */
+.hd-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--va-blue-lt);  /* 10.90:1 - AAA */
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* H1 uses Bitter serif - VA's official serif typeface */
+h1.hd-title {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--va-white);   /* 13.60:1 - AAA */
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.375rem;
+}
+
+.hd-sub {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--va-blue-lt);  /* 10.90:1 - AAA */
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+/* Legend strip - sits below title, uses VA process-list styling */
+.hd-legend-strip {
+  background: rgba(0,0,0,0.25);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 1rem 3.5rem;
+  display: flex; gap: 3rem; flex-wrap: wrap; align-items: flex-start;
+}
+.legend-group { display: flex; flex-direction: column; gap: 0.375rem; }
+.legend-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #d4b86a;  /* brightened gold - 7.04:1 on #162e51 / 8.25:1 on legend bg - AAA */
+  margin-bottom: 0.125rem;
+}
+.legend-items { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; }
+.legend-item {
+  display: flex; align-items: center; gap: 0.375rem;
+  font-family: var(--font-sans); font-size: 0.8125rem;
+  color: var(--va-gray-lt);  /* 10.37:1 - AAA */
+}
+.legend-swatch {
+  width: 12px; height: 12px; border-radius: 2px;
+  border: 1px solid rgba(255,255,255,0.18); flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MAP SCAFFOLD
+   ══════════════════════════════════════════════════════════════════════════ */
+.map-scroll {
+  overflow-x: auto;
+  background: #e8ecf0;  /* cool blue-gray tint - gives grid depth */
+}
+
+.map {
+  display: grid;
+  grid-template-columns: var(--col-label) repeat(9, var(--col-stage));
+  min-width: calc(var(--col-label) + 9 * var(--col-stage));
+  border-left: 1px solid #b4bfcc;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   STAGE HEADERS - VA.gov nav bar dark pattern
+   ══════════════════════════════════════════════════════════════════════════ */
+.sh-corner {
+  background: var(--va-navy);
+  border-right: 1px solid rgba(255,255,255,0.12);
+  border-bottom: 4px solid var(--va-blue);
+  padding: 1rem 0.875rem 0.875rem 1.25rem;
+  display: flex; align-items: flex-end;
+}
+.sh-corner span {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem; font-weight: 500;
+  color: var(--va-blue-lt);  /* AAA */
+  letter-spacing: 0.18em; text-transform: uppercase;
+}
+
+.sh {
+  background: var(--va-navy);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 4px solid var(--va-blue);
+  padding: 0.875rem 0.875rem 0.875rem;
+}
+.sh-num {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem; font-weight: 500;
+  color: var(--va-blue-lt);  /* 10.90:1 - AAA */
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+h2.sh-title {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem; font-weight: 700;
+  color: var(--va-white);  /* 13.60:1 - AAA */
+  line-height: 1.3; margin-bottom: 0.25rem;
+}
+.sh-time {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  color: var(--va-gray-lt);  /* 10.37:1 - AAA */
+  letter-spacing: 0.06em;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ROW LABELS - VA sidenav-inspired dark column
+   ══════════════════════════════════════════════════════════════════════════ */
+.rl {
+  background: var(--va-navy);
+  border-right: 3px solid var(--va-navy-mid);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  padding: 0.875rem 0.875rem 0.875rem 0;
+  display: flex; align-items: center;
+  position: relative; min-height: 88px;
+}
+/* Colored left accent bar - VA process-list style */
+.rl-bar {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 5px; border-radius: 0;
+}
+.rl-inner { padding-left: 0.875rem; }
+.rl-title {
+  font-family: var(--font-sans);
+  font-size: 0.75rem; font-weight: 700;
+  color: var(--va-gray-lt);  /* 10.37:1 - AAA */
+  line-height: 1.35; text-transform: uppercase; letter-spacing: 0.04em;
+}
+.rl-sub {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem; color: var(--va-blue-lt);  /* 10.90:1 - AAA */
+  margin-top: 0.25rem; letter-spacing: 0.04em;
+  text-transform: none; font-weight: 400;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SECTION BANNERS - VA summary-box header style
+   ══════════════════════════════════════════════════════════════════════════ */
+.sb {
+  grid-column: 1 / -1;
+  background: var(--va-navy-mid);
+  border-top: 3px solid rgba(255,255,255,0.1);
+  border-bottom: 2px solid var(--va-blue);
+  padding: 0.5rem 1.25rem;
+  display: flex; align-items: center; gap: 0.625rem;
+}
+.sb::before {
+  content: '';
+  display: inline-block; width: 3px; height: 1rem;
+  background: var(--va-blue-lt); border-radius: 2px;
+  flex-shrink: 0;
+}
+h3.sb-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem; font-weight: 500;
+  color: var(--va-blue-lt);  /* 7.71:1 on navy-mid - AAA */
+  letter-spacing: 0.18em; text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CELLS - VA card pattern
+   ══════════════════════════════════════════════════════════════════════════ */
+.c {
+  border-right: 1px solid #b4bfcc;
+  border-bottom: 1px solid #b4bfcc;
+  background: var(--va-white);
+  padding: 0.875rem 0.875rem 0.875rem;
+  position: relative; overflow: hidden;
+  min-height: 128px; vertical-align: top;
+}
+.c.alt { background: var(--va-gray-pale); }
+
+/* Emotion state backgrounds */
+.e-delight   { background: var(--va-green-lt)  !important; }
+.e-neutral   { background: var(--va-gray-pale) !important; }
+.e-friction  { background: var(--va-gold-lt)   !important; }
+.e-pain      { background: var(--va-red-lt)    !important; }
+.e-critical  { background: var(--va-sec-lt)    !important; }
+
+/* Top emotion accent bar - thicker for visual weight */
+.c-bar {
+  position: absolute; top: 0; left: 0; right: 0; height: 5px;
+}
+.bar-delight  { background: var(--va-green-mid); }
+.bar-neutral  { background: var(--va-gray-md); }
+.bar-friction { background: var(--va-gold-brt); }
+.bar-pain     { background: var(--va-red-brt); }
+.bar-critical { background: var(--va-red-dk); }
+
+/* Emotion tag - VA tag-status inspired pill */
+.etag {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem; font-weight: 700;
+  border-radius: 2px;
+  padding: 0.2rem 0.5rem;
+  margin: 0.375rem 0 0.625rem;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+/* All: AAA (≥7:1) */
+.etag-delight  { background: var(--va-green-lt); color: var(--va-ink); }  /* 15.25:1 AAA */
+.etag-neutral  { background: var(--va-gray-lt);  color: var(--va-ink); }  /* 13.13:1 AAA */
+.etag-friction { background: var(--va-gold-lt);  color: var(--va-ink);       }  /* 15.42:1 AAA */
+.etag-pain     { background: var(--va-red-lt);   color: var(--va-ink); }  /* 13.83:1 AAA */
+.etag-critical { background: var(--va-sec-lt);   color: var(--va-ink); }  /* 13.65:1 AAA */
+
+/* Cell body text */
+.c p {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem; line-height: 1.6;
+  color: var(--va-ink);  /* 17.22:1 on white - AAA */
+  margin-bottom: 0.4rem;
+}
+.c p:last-child { margin-bottom: 0; }
+
+/* Signal tags - VA alert-style left-bordered blocks */
+.tag {
+  display: flex; align-items: flex-start; gap: 0;
+  border-radius: 2px;
+  padding: 0.375rem 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem; line-height: 1.55;
+  margin-top: 0.4375rem;
+  border-left: 4px solid transparent;
+}
+/* Icon column: fixed width, no shrink, stays top-aligned with first text line */
+.tag-icon {
+  flex: 0 0 1.375rem;       /* fixed 22px column */
+  font-size: 0.75rem;
+  line-height: 1.55;
+  text-align: center;
+  padding-top: 0.03em;       /* optical alignment to cap height */
+}
+/* Text column: takes remaining width, wraps cleanly */
+.tag > span:last-child {
+  flex: 1;
+  min-width: 0;
+}
+/* All: verified AAA/AA */
+.tag-pain   { background: var(--va-red-lt);   color: var(--va-ink);         border-color: var(--va-red-brt);   }  /* 7.68:1 AAA */
+.tag-warn   { background: var(--va-gold-lt);  color: var(--va-ink);          border-color: var(--va-gold-brt);  }  /* 15.42:1 AAA */
+.tag-good   { background: var(--va-green-lt); color: var(--va-ink);          border-color: var(--va-green-bdr); }  /* 8.91:1 AAA */
+.tag-info   { background: var(--va-blue-lt);  color: var(--va-navy);          border-color: var(--va-blue);     }  /* 10.90:1 AAA */
+.tag-strong { background: var(--va-sec-lt);   color: var(--va-ink);           border-color: var(--va-red-dk);   }  /* 7.59:1 AAA */
+
+/* Quote block - VA inset / featured content style */
+.qt {
+  border-left: 4px solid currentColor;
+  padding: 0.4375rem 0.625rem;
+  border-radius: 0 2px 2px 0;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem; font-style: italic; line-height: 1.6;
+  margin-top: 0.5rem;
+}
+.qt-blue  { color: var(--va-ink);     background: var(--va-blue-lt); }  /* 10.90:1 AAA */
+.qt-green { color: var(--va-ink); background: var(--va-green-lt); } /* 8.91:1 AAA */
+.qt-gold  { color: var(--va-ink);      background: var(--va-gold-lt); }   /* 15.42:1 AAA */
+.qt-red   { color: var(--va-ink);   background: var(--va-red-lt);  }   /* 7.68:1 AAA */
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SYSTEM CHIPS - VA tag component style
+   ══════════════════════════════════════════════════════════════════════════ */
+.sys-c {
+  border-right: 1px solid #b4bfcc;
+  border-bottom: 1px solid #b4bfcc;
+  padding: 0.625rem 0.75rem;
+  background: #dce4ed;
+  min-height: 56px;
+  display: flex; flex-wrap: wrap; align-content: flex-start; gap: 0.25rem;
+}
+.chip {
+  display: inline-flex; align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem; font-weight: 500;
+  border-radius: 2px;
+  padding: 0.175rem 0.5rem;
+  letter-spacing: 0.03em; white-space: nowrap;
+}
+/* All chips: AAA */
+.chip-b { background: var(--va-blue-lt); color: var(--va-navy);      }  /* 10.90:1 AAA */
+.chip-r { background: var(--va-red-lt);  color: var(--va-ink); }  /* 13.83:1 AAA */
+.chip-g { background: var(--va-green-lt);color: var(--va-ink); }  /* 15.25:1 AAA */
+.chip-a { background: var(--va-gold-lt); color: var(--va-ink);       }  /* 15.42:1 AAA */
+.chip-x { background: var(--va-gray-lt); color: var(--va-navy);      }  /* 10.37:1 AAA */
+
+/* ══════════════════════════════════════════════════════════════════════════
+   EMOTION ARC - dark band below main grid
+   ══════════════════════════════════════════════════════════════════════════ */
+.arc-label {
+  background: #0d1f36;
+  border-right: 3px solid var(--va-navy-mid);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  border-top: 4px solid var(--va-blue);
+  padding: 0.75rem 0.875rem 0.75rem 1.25rem;
+  display: flex; align-items: center;
+}
+.arc-label span {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem; font-weight: 500;
+  color: var(--va-blue-lt);  /* AAA */
+  letter-spacing: 0.18em; text-transform: uppercase;
+}
+.arc-c {
+  background: #0d1f36;
+  border-right: 1px solid rgba(255,255,255,0.07);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  border-top: 4px solid var(--va-blue);
+  padding: 0.75rem 0.5rem;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.3rem; min-height: 68px; justify-content: center;
+}
+.arc-emoji { font-size: 1.375rem; line-height: 1; }
+.arc-txt {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  color: var(--va-blue-lt);  /* 10.90:1 - AAA */
+  text-align: center; line-height: 1.45; letter-spacing: 0.04em;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   OPPORTUNITIES ROW - VA summary-box / inset style
+   ══════════════════════════════════════════════════════════════════════════ */
+.opp-label {
+  background: var(--va-opp-bg);  /* #244e5e - white 9.03:1 AAA */
+  border-right: 3px solid #1a3d4c;
+  border-bottom: 1px solid #1a3d4c;
+  padding: 0.75rem 0.875rem 0.75rem 1.25rem;
+  display: flex; align-items: center;
+}
+.opp-label span {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem; font-weight: 500;
+  color: var(--va-white);  /* 9.03:1 - AAA */
+  letter-spacing: 0.18em; text-transform: uppercase;
+}
+.opp-c {
+  background: var(--va-cyan-lt);
+  border-right: 1px solid #9dd0d6;
+  border-bottom: 1px solid #9dd0d6;
+  padding: 0.75rem 0.875rem;
+  min-height: 80px;
+}
+.opp {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem; color: var(--va-ink);   /* 15.59:1 - AAA */
+  line-height: 1.6; margin-bottom: 0.3rem;
+  padding-left: 1.125rem; position: relative; font-weight: 400;
+}
+.opp::before {
+  content: '→'; position: absolute; left: 0;
+  color: var(--va-cyan-dk); font-weight: 700;
+  font-size: 0.75rem;
+}
+.opp.hi { color: var(--va-ink); font-weight: 700; }  /* 15.59:1 AAA */
+.opp.hi::before { content: '↑'; color: var(--va-red-brt); }  /* ↑ */
+
+/* Divider row (unused but kept for structure) */
+.row-divider { grid-column: 1 / -1; height: 2px; background: #9aabb8; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FOOTER - VA.gov footer dark pattern
+   ══════════════════════════════════════════════════════════════════════════ */
+.site-footer {
+  background: var(--va-navy);
+  padding: 2rem 3.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 4px solid var(--va-gold-accent);  /* VA gold accent bar - matches header */
+  gap: 2rem; flex-wrap: wrap;
+}
+.ft-copy {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--va-gray-lt);  /* 10.37:1 - AAA */
+  line-height: 2;
+}
+.ft-stats { display: flex; gap: 2.5rem; }
+.ft-stat { text-align: center; }
+.ft-stat-n {
+  font-family: var(--font-mono);
+  font-size: 1.875rem; font-weight: 700;
+  color: var(--va-blue-lt);  /* 10.90:1 - AAA */
+  line-height: 1;
+}
+.ft-stat-l {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  color: var(--va-gray-lt);  /* 10.37:1 - AAA */
+  text-transform: uppercase; letter-spacing: 0.14em; margin-top: 0.25rem;
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ══ HEADER ══════════════════════════════════════════════════════════════ -->
+<header class="site-header" role="banner">
+<div class="hd-content">
+  <span class="hd-eyebrow">Strategic Capital Investment Planning · User Journey Map</span>
+  <h1 class="hd-title">SCIP User Journey</h1>
+  <p class="hd-sub">VISN-level capital planner experience · Annual cycle · 9 journey stages</p>
+  </div><!-- /hd-content -->
+  <div class="hd-legend-strip" role="note" aria-label="Legend for reading the journey map">
+    <div class="legend-group">
+      <span class="legend-lbl">Emotional State</span>
+      <div class="legend-items">
+        <span class="legend-item"><span class="legend-swatch" style="background:#ecf3ec;" role="presentation" aria-hidden="true"></span>Delight</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#f0f0f0;" role="presentation" aria-hidden="true"></span>Neutral</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#faf3d1;" role="presentation" aria-hidden="true"></span>Friction</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#f4e3db;" role="presentation" aria-hidden="true"></span>Pain</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#f8dfe2;" role="presentation" aria-hidden="true"></span>Critical</span>
+      </div>
+    </div>
+    <div class="legend-group">
+      <span class="legend-lbl">Signal Type</span>
+      <div class="legend-items">
+        <span class="legend-item"><span class="legend-swatch" style="background:#f4e3db;border-left:3px solid #d54309;" role="presentation" aria-hidden="true"></span>Pain point</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#faf3d1;border-left:3px solid #ffbe2e;" role="presentation" aria-hidden="true"></span>Workaround</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#ecf3ec;border-left:3px solid #008817;" role="presentation" aria-hidden="true"></span>Delight signal</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#d9e8f6;border-left:3px solid #005ea2;" role="presentation" aria-hidden="true"></span>Need / goal</span>
+      </div>
+    </div>
+    <div class="legend-group">
+      <span class="legend-lbl">Systems in Use</span>
+      <div class="legend-items">
+        <span class="legend-item"><span class="legend-swatch" style="background:#d9e8f6;" role="presentation" aria-hidden="true"></span>In-system</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#faf3d1;" role="presentation" aria-hidden="true"></span>External tool</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#f4e3db;" role="presentation" aria-hidden="true"></span>Broken touchpoint</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#ecf3ec;" role="presentation" aria-hidden="true"></span>Working well</span>
+      </div>
+    </div>
+    <div class="legend-group">
+      <span class="legend-lbl">Opportunities</span>
+      <div class="legend-items">
+        <span class="legend-item"><span class="legend-swatch" style="background:#e7f6f8;" role="presentation" aria-hidden="true"></span>→ Standard</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#e7f6f8;border-left:3px solid #6f3331;" role="presentation" aria-hidden="true"></span>↑ High priority</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ MAIN MAP ════════════════════════════════════════════════════════════ -->
+<main id="main-content">
+<div class="map-scroll" role="region" aria-label="SCIP User Journey Map: 9 stages across the annual capital planning cycle. Scroll horizontally to see all stages." tabindex="0">
+<div class="map">
+
+<!-- ── STAGE HEADERS ────────────────────────────────────────────────────── -->
+<div class="sh-corner" role="columnheader"><span>Swimlane</span></div>
+<div class="sh" role="columnheader"><div class="sh-num">Stage 01</div><h2 class="sh-title">Pre-Cycle Preparation</h2><div class="sh-time">Oct – Jan</div></div>
+<div class="sh" role="columnheader"><div class="sh-num">Stage 02</div><h2 class="sh-title">Cycle Open</h2><div class="sh-time">February</div></div>
+<div class="sh" role="columnheader"><div class="sh-num">Stage 03</div><h2 class="sh-title">Project Entry</h2><div class="sh-time">Feb – March</div></div>
+<div class="sh" role="columnheader"><div class="sh-num">Stage 04</div><h2 class="sh-title">VISN Review</h2><div class="sh-time">March – April</div></div>
+<div class="sh" role="columnheader"><div class="sh-num">Stage 05</div><h2 class="sh-title">Submission</h2><div class="sh-time">April</div></div>
+<div class="sh" role="columnheader"><div class="sh-num">Stage 06</div><h2 class="sh-title">Budget Uncertainty</h2><div class="sh-time">Feb – May</div></div>
+<div class="sh" role="columnheader"><div class="sh-num">Stage 07</div><h2 class="sh-title">Review Response</h2><div class="sh-time">April – June</div></div>
+<div class="sh" role="columnheader"><div class="sh-num">Stage 08</div><h2 class="sh-title">Reporting</h2><div class="sh-time">Ongoing</div></div>
+<div class="sh" role="columnheader"><div class="sh-num">Stage 09</div><h2 class="sh-title">Post-Cycle</h2><div class="sh-time">June – Sept</div></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- SWIMLANE 1: ACTIONS & GOALS                                           -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="sb"><h3 class="sb-title">Actions &amp; Goals</h3></div>
+
+<div class="rl"><div class="rl-bar" style="background:var(--va-blue);" aria-hidden="true"></div><div class="rl-inner"><div class="rl-title">What Users Are Doing</div><div class="rl-sub">Actions + goals</div></div></div>
+
+<div class="c e-delight">
+  <div class="c-bar bar-delight" aria-hidden="true"></div>
+  <span class="etag etag-delight"><span aria-hidden="true">😊</span><span class="sr-only">Delight: </span> Proactive</span>
+  <p>Reviewing prior-cycle rollover projects and cross-checking CAI data against expected baselines. Preparing station suspense schedules and confirming training compliance before granting access.</p>
+  <p>Identifying which stations need extra support or direct VISN-level project entry this cycle.</p>
+</div>
+
+<div class="c e-friction alt">
+  <div class="c-bar bar-friction" aria-hidden="true"></div>
+  <span class="etag etag-friction"><span aria-hidden="true">😕</span><span class="sr-only">Friction: </span> High Admin</span>
+  <p>CAI data imported as a locked snapshot. Granting and renewing station access. Reviewing baseline discrepancies visible at cycle open.</p>
+  <p>Correcting stations who have navigated into the prior-year cycle list.</p>
+</div>
+
+<div class="c e-pain">
+  <div class="c-bar bar-pain" aria-hidden="true"></div>
+  <span class="etag etag-pain"><span aria-hidden="true">😤</span><span class="sr-only">Pain: </span> Peak Friction</span>
+  <p>Monitoring station project submissions in real time. Reviewing descriptions, cost estimates, gap closure logic, project type selection, and checklist compliance.</p>
+  <p>Sending correction requests via message center. Entering projects directly for under-resourced stations.</p>
+</div>
+
+<div class="c e-friction alt">
+  <div class="c-bar bar-friction" aria-hidden="true"></div>
+  <span class="etag etag-friction"><span aria-hidden="true">😕</span><span class="sr-only">Friction: </span> Support Burden</span>
+  <p>Reviewing every project across all tabs. Validating description quality, cost estimate reasonableness, gap closure logic. Escalating unresolvable data issues to help desk.</p>
+  <p>Attempting to produce summary reports for leadership - mostly resorting to manual Excel extraction.</p>
+</div>
+
+<div class="c e-friction">
+  <div class="c-bar bar-friction" aria-hidden="true"></div>
+  <span class="etag etag-friction"><span aria-hidden="true">😕</span><span class="sr-only">Friction: </span> Pre-Submit</span>
+  <p>Final compliance check before approving and submitting the VISN project list to the program office. Trying to anticipate what central reviewers will flag.</p>
+  <p>No pre-flight compliance tool - relying entirely on experience and memory to catch errors.</p>
+</div>
+
+<div class="c e-pain alt">
+  <div class="c-bar bar-pain" aria-hidden="true"></div>
+  <span class="etag etag-pain"><span aria-hidden="true">😤</span><span class="sr-only">Pain: </span> Provisional Mode</span>
+  <p>Waiting on President's Budget release. Stations submit hedged, inflated, or duplicated projects as budget negotiations continue. Annual rework cycle begins.</p>
+  <p>SCIP data is intentionally provisional during this period - yet the system treats it as authoritative.</p>
+</div>
+
+<div class="c e-friction">
+  <div class="c-bar bar-friction" aria-hidden="true"></div>
+  <span class="etag etag-friction"><span aria-hidden="true">😕</span><span class="sr-only">Friction: </span> Facilitation</span>
+  <p>Central office returns reviewer comments. VISN routes feedback to stations, facilitates remediation, and tracks resubmission - some via message center, some via external spreadsheet.</p>
+  <p>No single communication standard. Stations uncertain where to receive feedback.</p>
+</div>
+
+<div class="c e-pain alt">
+  <div class="c-bar bar-pain" aria-hidden="true"></div>
+  <span class="etag etag-pain"><span aria-hidden="true">😤</span><span class="sr-only">Pain: </span> Manual Work</span>
+  <p>Generating reports for VISN leadership and program office. Built-in reporting tools are either undiscoverable, undertrained, or inadequate for required output formats.</p>
+  <p>Every VISN manager describes manually copying data from SCIP into Excel to create leadership summaries.</p>
+</div>
+
+<div class="c e-neutral">
+  <div class="c-bar bar-neutral" aria-hidden="true"></div>
+  <span class="etag etag-neutral"><span aria-hidden="true">😐</span><span class="sr-only">Neutral: </span> Winding Down</span>
+  <p>Archiving completed cycle projects. Cleaning up station user access. Running space analysis tool comparisons for future cycle prep.</p>
+  <p>Lessons learned absorbed informally - never formally captured or surfaced for the next cycle.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- SWIMLANE 2: THOUGHTS & MENTAL MODELS                                  -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="sb"><h3 class="sb-title">Thoughts, Needs &amp; Mental Models</h3></div>
+
+<div class="rl"><div class="rl-bar" style="background:var(--va-navy-mid);" aria-hidden="true"></div><div class="rl-inner"><div class="rl-title">Thoughts &amp; Needs</div><div class="rl-sub">Mental model · unmet needs</div></div></div>
+
+<div class="c e-delight">
+  <div class="c-bar bar-delight" aria-hidden="true"></div>
+  <p>Mental model: capital planning is year-round work, not a seasonal sprint. Pre-cycle prep is as important as the cycle itself - experienced users feel this acutely.</p>
+  <p>Core need: know what's already in the station baseline before project entry begins, so CAI errors don't surface mid-cycle.</p>
+  <div class="qt qt-green">"I feel like it's year round. Maybe two months off from SCIP, in some sense."</div>
+</div>
+
+<div class="c e-friction alt">
+  <div class="c-bar bar-friction" aria-hidden="true"></div>
+  <p>Data visible in SCIP is already stale - CAI kept updating after the snapshot was locked. Experienced users know to call the help desk. Newer users don't, and the system doesn't tell them.</p>
+  <div class="qt qt-gold">"There are certain errors based on data imported from CAI, where if changes have happened... that is not reflected in SCIP."</div>
+</div>
+
+<div class="c e-pain">
+  <div class="c-bar bar-pain" aria-hidden="true"></div>
+  <p>VISN managers are mentally pre-running the review process while stations are still entering data. They can predict the errors before seeing them.</p>
+  <p>Core need: in-tool guidance that prevents common errors upstream, so the VISN doesn't absorb the correction burden.</p>
+  <div class="qt qt-red">"However good or bad that estimate is, that's the number you get approved for."</div>
+</div>
+
+<div class="c e-friction alt">
+  <div class="c-bar bar-friction" aria-hidden="true"></div>
+  <p>VISN managers are doing station-level work. The system doesn't give station users enough guidance to succeed independently, so the correction burden flows upward.</p>
+  <p>This is the uncompensated support staff dynamic - a hidden cost with no visibility in any system metric.</p>
+</div>
+
+<div class="c e-friction">
+  <div class="c-bar bar-friction" aria-hidden="true"></div>
+  <p>"I want to run the same checklist the program office will run before I submit - catch everything they'll flag."</p>
+  <p>No pre-submission compliance view exists. Users rely entirely on experience and institutional memory. New users have no substitute.</p>
+</div>
+
+<div class="c e-pain alt">
+  <div class="c-bar bar-pain" aria-hidden="true"></div>
+  <p>"These submissions aren't real plans - they're negotiating positions. The number in SCIP right now is a placeholder until the budget drops."</p>
+  <div class="tag tag-strong">
+    <span class="tag-icon" aria-hidden="true">⚠</span>
+    <span><strong>Critical systemic finding:</strong> SCIP is used as a budget negotiation instrument during this window. Any analytics or AI tools built on in-cycle data would operate on intentionally provisional, inflated values - not planning data.</span>
+  </div>
+</div>
+
+<div class="c e-friction">
+  <div class="c-bar bar-friction" aria-hidden="true"></div>
+  <p>"Some reviewers use message center. Some send a spreadsheet. I don't always know where to look for feedback."</p>
+  <p>Fragmented review process creates confusion for both the stations receiving feedback and the VISN managers facilitating it.</p>
+</div>
+
+<div class="c e-pain alt">
+  <div class="c-bar bar-pain" aria-hidden="true"></div>
+  <p>"That whole reporting tab is meaningless to me right now. Training was offered once at 2.0 launch and I've lost it."</p>
+  <div class="qt qt-red">"I take all of that information out of SCIP but I don't actually export it from SCIP directly."</div>
+</div>
+
+<div class="c e-neutral">
+  <div class="c-bar bar-neutral" aria-hidden="true"></div>
+  <p>"Everything I learned this cycle lives in my head. If I leave, it goes with me."</p>
+  <p>No knowledge-capture mechanism exists. Institutional memory is concentrated in individuals. Each new person must rediscover everything from scratch.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- SWIMLANE 3: PAIN POINTS                                               -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="sb"><h3 class="sb-title">Pain Points &amp; Barriers</h3></div>
+
+<div class="rl"><div class="rl-bar" style="background:var(--va-red-brt);" aria-hidden="true"></div><div class="rl-inner"><div class="rl-title">Pain Points</div><div class="rl-sub">Barriers · blockers</div></div></div>
+
+<div class="c e-friction">
+  <div class="c-bar bar-friction" aria-hidden="true"></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Baseline opacity:</strong> Cannot see what's in a station's space baseline without calling the help desk. Self-service is impossible.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Space mapping tool removed:</strong> Tool mapping service types to SCIP space categories was removed from the UI; some users have a personal copy from years ago - most do not.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>No anomaly detection:</strong> Zero-workload data errors go undetected until an expert manually cross-references multiple external systems.</span></div>
+</div>
+
+<div class="c e-pain alt">
+  <div class="c-bar bar-pain" aria-hidden="true"></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>CAI snapshot locked at cycle open:</strong> Baseline stales the moment the cycle opens. Mid-cycle CAI updates require manual help desk intervention - a bottleneck on every correction.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Access expiration with no renewal path:</strong> Access expires every 45–90 days; users must be re-entered from scratch, not renewed. Incentivizes access gatekeeping.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Cycle filter labeling confusion:</strong> "All budget year current cycle" routes users into prior-year cycle lists repeatedly.</span></div>
+</div>
+
+<div class="c e-critical">
+  <div class="c-bar bar-critical" aria-hidden="true"></div>
+  <div class="tag tag-strong"><span class="tag-icon" aria-hidden="true">🚨</span><span><strong>DEFECT&nbsp;-&nbsp;Checklist&nbsp;false-green:</strong> Business questions section shows complete even when empty. Allows incomplete submissions to advance past checklist undetected. Requires immediate investigation.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Building gross conversion unknown:</strong> Estimator requires building gross SF; stations enter department gross. No in-tool prompt or reminder exists.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Estimator lags industry 1–2 years:</strong> HVAC projects systematically underestimated. The approved SCIP figure becomes the approved project budget and cascades to the Congressional request.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Checklist-to-tab mismatch:</strong> Checklist error items don't navigate to the correct form tab. Item order doesn't match tab order. Invisible to experts; a wall for infrequent users.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Complex project type blocks:</strong> Conversion + lease combinations generate false gap errors. VHA/VBA shared-tenancy projects have no valid project type.</span></div>
+</div>
+
+<div class="c e-friction alt">
+  <div class="c-bar bar-friction" aria-hidden="true"></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Reporting tab effectively unusable for many:</strong> Capability exists but training was offered once at 2.0 launch and never repeated.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>No prioritization field:</strong> VISN managers cannot rank or prioritize projects within SCIP. Tracked in ad-hoc external spreadsheets.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Review process fragmented:</strong> Some reviewers use message center, some use an external spreadsheet. No standard, no aggregate view.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>High-value features undiscovered:</strong> Station gap adjustment summary found only by accident after years of use.</span></div>
+</div>
+
+<div class="c e-friction">
+  <div class="c-bar bar-friction" aria-hidden="true"></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>No pre-submission compliance view:</strong> No way to run the reviewer's checklist before submitting. Experienced users simulate it from memory.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>"VA Approved" status misleads:</strong> Interpreted as "funded" by station users. Means "approved for submission."</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>"None" priority trap:</strong> Leaving priorities blank is an error; "None" must be explicitly selected. No in-form prompt.</span></div>
+</div>
+
+<div class="c e-pain alt">
+  <div class="c-bar bar-pain" aria-hidden="true"></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Budget cycle / SCIP cycle misalignment:</strong> President's Budget releases after SCIP submission deadline - annual rework is structurally baked into the process.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Provisional data treated as authoritative:</strong> No mechanism to mark submissions as budget-dependent or provisional.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>No batch update tools:</strong> When budget releases, stations revise projects manually with no batch capability.</span></div>
+</div>
+
+<div class="c e-friction">
+  <div class="c-bar bar-friction" aria-hidden="true"></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Review tool fragmentation:</strong> External spreadsheet competes with message center. No aggregate view of comments across cycles, no pattern analysis.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Status labels opaque:</strong> "In Remediation" label is unexplained; meaning inferred only through long experience.</span></div>
+</div>
+
+<div class="c e-pain alt">
+  <div class="c-bar bar-pain" aria-hidden="true"></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>No standardized export:</strong> Every VISN manager builds a custom Excel workaround. No canned reports match what leadership reviews.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Reporting regression from 1.0:</strong> The 2.0 tab is more powerful but far less discoverable. Capability without discoverability is invisible.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Prioritization lives outside SCIP:</strong> No in-system field; tracked in ad-hoc per-person spreadsheets.</span></div>
+</div>
+
+<div class="c e-neutral">
+  <div class="c-bar bar-neutral" aria-hidden="true"></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>Historical data loss (1.0→2.0 migration):</strong> One-week notice. Prior cycle data inaccessible. Trust significantly damaged.</span></div>
+  <div class="tag tag-pain"><span class="tag-icon" aria-hidden="true">⚠</span><span><strong>No knowledge capture:</strong> Lessons learned live in individuals, not the system. Tribal knowledge tax compounds with every staff transition.</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- SWIMLANE 4: WORKAROUNDS                                               -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="sb"><h3 class="sb-title">Documented Workarounds - Shadow Systems &amp; Compensating Behaviors</h3></div>
+
+<div class="rl"><div class="rl-bar" style="background:var(--va-gold-brt);" aria-hidden="true"></div><div class="rl-inner"><div class="rl-title">Workarounds</div><div class="rl-sub">Shadow systems · compensating behaviors</div></div></div>
+
+<div class="c">
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Calls help desk to confirm baseline composition each cycle - a self-service lookup that requires a ticket.</span></div>
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Maintains personal desktop copy of the space mapping tool removed from SCIP years ago. Not all users have it.</span></div>
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Manually cross-references VSSC workload, CAI gap data, and an external space analysis spreadsheet to detect data errors before they reach SCIP.</span></div>
+</div>
+
+<div class="c alt">
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Calls help desk to request manual SCIP database update for every known CAI discrepancy at cycle open.</span></div>
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Maintains external Excel log of all station users and their expiration dates to proactively re-enter before access lapses.</span></div>
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Sends screenshot-laden email reminders to stations every cycle showing which filter to select to reach the current cycle.</span></div>
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Some VISN managers restrict access entirely and enter projects themselves to prevent errors from infrequent users.</span></div>
+</div>
+
+<div class="c">
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Proactively messages stations before the cost entry step to warn about building gross SF conversion - every cycle.</span></div>
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Contacts help desk for manual override on every conversion + lease combination that generates a false gap error.</span></div>
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Holds pre-cycle office hours specifically to pre-empt the same recurring errors every cycle - same questions, every year.</span></div>
+</div>
+
+<div class="c alt">
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Manually copies data from SCIP into Excel field by field to create leadership-facing project summaries.</span></div>
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Tracks project prioritization in a personal Excel spreadsheet - an off-system record of what should be an in-SCIP field.</span></div>
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Documents review findings in both message center AND external spreadsheet to cover inconsistency across reviewers.</span></div>
+</div>
+
+<div class="c">
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Mentally rehearses the central reviewer's checklist from memory before submitting - a cognitive substitute for a non-existent pre-flight compliance tool.</span></div>
+</div>
+
+<div class="c alt">
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Maintains external tracking spreadsheet for budget-pending project status while SCIP data remains provisional.</span></div>
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Submits duplicate or inflated projects intentionally - knowing they'll be revised post-budget. A deliberate data quality compromise required by the process.</span></div>
+</div>
+
+<div class="c">
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Checks both message center and external review spreadsheet for feedback because no standard exists across central office reviewers.</span></div>
+</div>
+
+<div class="c alt">
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Builds Excel pivot tables from manual SCIP data extraction - rebuilt from scratch every cycle.</span></div>
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Asks colleagues from other VISNs how to use reporting tools - informal peer support substituting for missing training.</span></div>
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Uses message center comments as proxy for priority notation - not extractable, not auditable, not surfaceable.</span></div>
+</div>
+
+<div class="c">
+  <div class="tag tag-warn"><span class="tag-icon" aria-hidden="true">⟳</span><span>Relies on personal notes, institutional memory, and informal peer conversations to carry lessons from one cycle to the next.</span></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- SWIMLANE 5: DELIGHT SIGNALS                                           -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="sb"><h3 class="sb-title">Delight Signals - What Is Working</h3></div>
+
+<div class="rl"><div class="rl-bar" style="background:var(--va-green-mid);" aria-hidden="true"></div><div class="rl-inner"><div class="rl-title">Delight Signals</div><div class="rl-sub">Preserve + extend</div></div></div>
+
+<div class="c e-delight"><div class="c-bar bar-delight" aria-hidden="true"></div><div class="tag tag-good"><span class="tag-icon" aria-hidden="true">★</span><span>System supports year-round engagement for experienced users - project history, gap data, and rollover projects are durable across cycles.</span></div></div>
+<div class="c e-delight alt"><div class="c-bar bar-delight" aria-hidden="true"></div><div class="tag tag-good"><span class="tag-icon" aria-hidden="true">★</span><span>Custom views allow VISN managers to build filtered project lists tailored to their review workflow - flags, status, station, program type.</span></div></div>
+<div class="c e-delight"><div class="c-bar bar-delight" aria-hidden="true"></div>
+  <div class="tag tag-good"><span class="tag-icon" aria-hidden="true">★</span><span>Gap view is genuinely useful once found - directly shows which projects close which gaps.</span></div>
+  <div class="tag tag-good"><span class="tag-icon" aria-hidden="true">★</span><span>Station gap adjustment summary is described as "really handy" - when discovered.</span></div>
+</div>
+<div class="c e-delight alt"><div class="c-bar bar-delight" aria-hidden="true"></div>
+  <div class="tag tag-good"><span class="tag-icon" aria-hidden="true">★</span><span><strong>Message center: most-loved feature in the study.</strong> Threaded project communication with email notification and a direct deep-link to the project - eliminates inbox overhead for correction workflows.</span></div>
+  <div class="qt qt-green">"I love this message center. It allows me to talk to stations without sending a hundred emails. What I really love is it takes them directly to the project."</div>
+</div>
+<div class="c e-delight"><div class="c-bar bar-delight" aria-hidden="true"></div><div class="tag tag-good"><span class="tag-icon" aria-hidden="true">★</span><span>Message center deep-link lands the user exactly at the project requiring correction - no re-navigation, no search, no wasted time.</span></div></div>
+<div class="c e-delight alt"><div class="c-bar bar-delight" aria-hidden="true"></div><div class="tag tag-good"><span class="tag-icon" aria-hidden="true">★</span><span>Cycle-over-cycle project continuity - rollover logic preserves institutional work history and eliminates re-entry of carried projects.</span></div></div>
+<div class="c e-delight"><div class="c-bar bar-delight" aria-hidden="true"></div><div class="tag tag-good"><span class="tag-icon" aria-hidden="true">★</span><span>Message center creates a communication audit trail - all project-level discussion captured in a single thread, visible to VISN and station.</span></div></div>
+<div class="c e-delight alt"><div class="c-bar bar-delight" aria-hidden="true"></div><div class="tag tag-good"><span class="tag-icon" aria-hidden="true">★</span><span>Reporting tab capabilities exist and are used successfully by trained VISNs - the data needed for leadership reports is available in the system.</span></div></div>
+<div class="c e-delight"><div class="c-bar bar-delight" aria-hidden="true"></div><div class="tag tag-good"><span class="tag-icon" aria-hidden="true">★</span><span>Historical project data accessible across cycles - supports longitudinal planning and gap trend analysis when not disrupted by migrations.</span></div></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- SYSTEM TOUCHPOINTS                                                     -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="sb"><h3 class="sb-title">System Touchpoints</h3></div>
+
+<div class="rl"><div class="rl-bar" style="background:var(--va-cyan-dk);" aria-hidden="true"></div><div class="rl-inner"><div class="rl-title">Systems in Use</div><div class="rl-sub">In-system · external · broken</div></div></div>
+
+<div class="sys-c"><span class="chip chip-b">SCIP (view-only)</span><span class="chip chip-r">CAI</span><span class="chip chip-a">Space Map Tool</span><span class="chip chip-a">SharePoint</span><span class="chip chip-a">Email/Teams</span><span class="chip chip-a">Excel</span></div>
+<div class="sys-c"><span class="chip chip-r">SCIP (access mgmt)</span><span class="chip chip-r">CAI (locked)</span><span class="chip chip-a">SharePoint forms</span><span class="chip chip-a">IT ticketing</span><span class="chip chip-g">Message Center</span></div>
+<div class="sys-c"><span class="chip chip-r">SCIP (project form)</span><span class="chip chip-r">SCIP (estimator)</span><span class="chip chip-r">SCIP (checklist)</span><span class="chip chip-a">CAI (cross-ref)</span><span class="chip chip-g">Message Center</span><span class="chip chip-a">Space Map Tool</span></div>
+<div class="sys-c"><span class="chip chip-b">SCIP (review view)</span><span class="chip chip-g">Message Center</span><span class="chip chip-r">SCIP (reporting)</span><span class="chip chip-a">External spreadsheet</span><span class="chip chip-a">CAI</span><span class="chip chip-a">Excel</span></div>
+<div class="sys-c"><span class="chip chip-b">SCIP (submit)</span><span class="chip chip-g">Message Center</span><span class="chip chip-a">Email</span></div>
+<div class="sys-c"><span class="chip chip-r">SCIP (provisional)</span><span class="chip chip-b">SAT Tool</span><span class="chip chip-a">Excel (budget)</span><span class="chip chip-a">Email/Teams</span></div>
+<div class="sys-c"><span class="chip chip-g">Message Center</span><span class="chip chip-a">External spreadsheet</span><span class="chip chip-a">Email</span><span class="chip chip-b">SCIP (status)</span></div>
+<div class="sys-c"><span class="chip chip-r">SCIP (reporting)</span><span class="chip chip-a">Excel (manual)</span><span class="chip chip-a">Teams</span><span class="chip chip-b">SCIP (views)</span></div>
+<div class="sys-c"><span class="chip chip-b">SCIP (history)</span><span class="chip chip-b">CAI</span><span class="chip chip-a">Space Analysis</span><span class="chip chip-a">SharePoint</span></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- EMOTION ARC                                                            -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="sb"><h3 class="sb-title">Overall Emotional Arc</h3></div>
+
+<div class="arc-label"><span>Emotion Arc</span></div>
+<div class="arc-c"><div class="arc-emoji" aria-hidden="true">😊</div><div class="arc-txt">Proactive<br>Engaged</div></div>
+<div class="arc-c"><div class="arc-emoji" aria-hidden="true">😕</div><div class="arc-txt">Managing<br>High Admin</div></div>
+<div class="arc-c"><div class="arc-emoji" aria-hidden="true">😤</div><div class="arc-txt">Peak<br>Friction</div></div>
+<div class="arc-c"><div class="arc-emoji" aria-hidden="true">😕</div><div class="arc-txt">Support<br>Burden</div></div>
+<div class="arc-c"><div class="arc-emoji" aria-hidden="true">😕</div><div class="arc-txt">Anxiety<br>No Preflight</div></div>
+<div class="arc-c"><div class="arc-emoji" aria-hidden="true">😤</div><div class="arc-txt">Provisional<br>Noise</div></div>
+<div class="arc-c"><div class="arc-emoji" aria-hidden="true">😕</div><div class="arc-txt">Facilitation<br>Overhead</div></div>
+<div class="arc-c"><div class="arc-emoji" aria-hidden="true">😤</div><div class="arc-txt">Manual<br>Work</div></div>
+<div class="arc-c"><div class="arc-emoji" aria-hidden="true">😐</div><div class="arc-txt">Winding<br>Down</div></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<!-- DESIGN OPPORTUNITIES                                                   -->
+<!-- ══════════════════════════════════════════════════════════════════════ -->
+<div class="sb"><h3 class="sb-title">Design Opportunities</h3></div>
+
+<div class="opp-label"><span>Opportunities</span></div>
+
+<div class="opp-c">
+  <p class="opp hi">Pre-cycle data health dashboard: anomaly alerts, CAI deltas, baseline changes since last cycle</p>
+  <p class="opp hi">Restore space mapping tool to in-SCIP context at the point of space type selection</p>
+  <p class="opp">Baseline composition view for VISN users - self-service instead of help desk ticket</p>
+</div>
+
+<div class="opp-c">
+  <p class="opp hi">CAI–SCIP real-time sync, or delta view showing changes since cycle open - eliminates help desk bottleneck</p>
+  <p class="opp hi">Access renewal workflow - extend existing records without full re-entry</p>
+  <p class="opp">Rename cycle filters to explicit year labels: "SCIP 28 Cycle Projects"</p>
+  <p class="opp">In-tool guidance for manual CAI gap edit capability - capability exists, training does not</p>
+</div>
+
+<div class="opp-c">
+  <p class="opp hi">Fix checklist false-green defect - this is a bug, not a design improvement</p>
+  <p class="opp hi">Cost entry contextual reminder: "Have you converted department gross SF to building gross SF?"</p>
+  <p class="opp hi">Direct checklist-to-tab navigation links with ordering that matches tab sequence</p>
+  <p class="opp hi">Business rules support for conversion + lease companion project relationships</p>
+  <p class="opp">Conditional validation: energy priority checked → conservation priority field required</p>
+  <p class="opp">Default "None" in priorities, or prompt that blank is an error</p>
+</div>
+
+<div class="opp-c">
+  <p class="opp hi">Role-specific default view for VISN review: all projects, flag status, message count, submission status</p>
+  <p class="opp hi">Standardize review to message center - deprecate external spreadsheet tool</p>
+  <p class="opp hi">3–5 canned reports with one-click export matching what central leadership reviews</p>
+  <p class="opp">VISN-level priority/rank field - not shown in external submissions, exportable in reports</p>
+  <p class="opp">Surface station gap adjustment summary prominently in VISN review workflow</p>
+</div>
+
+<div class="opp-c">
+  <p class="opp hi">Pre-submission compliance report: run reviewer's checklist before submitting</p>
+  <p class="opp">Clarify "VA Approved" status: tooltip or inline explanation that it means approved for submission, not funded</p>
+  <p class="opp">Default "None" selection for priorities or in-form prompt that blank is an error</p>
+</div>
+
+<div class="opp-c">
+  <p class="opp hi">Budget status tags: allow submissions to be marked "provisional - pending President's Budget"</p>
+  <p class="opp hi">Batch update / rollover tools for post-budget project revision</p>
+  <p class="opp">Cycle status management: communicate to leadership that in-cycle data is provisional, not final</p>
+  <p class="opp">Caution flag for any analytics feature: in-cycle data reflects negotiating positions, not finalized plans</p>
+</div>
+
+<div class="opp-c">
+  <p class="opp hi">Mandate message center for all reviewer-to-submitter communication - eliminate tool split</p>
+  <p class="opp">Tooltip definitions for all status labels: "In Remediation," "VA Approved," etc.</p>
+  <p class="opp">Aggregate review comment view for VISN managers tracking multiple stations simultaneously</p>
+</div>
+
+<div class="opp-c">
+  <p class="opp hi">3–5 canned reports mirroring central leadership formats - one-click export to spreadsheet</p>
+  <p class="opp hi">Role-specific recorded training on reporting tools - not a one-time launch event</p>
+  <p class="opp">Audit existing feature utilization before building new features - undiscovery is the primary problem</p>
+  <p class="opp">VISN-level priority field with exportable report and leadership-facing sort order</p>
+</div>
+
+<div class="opp-c">
+  <p class="opp hi">Advance notice of future migrations - minimum 30 days, preferably 90</p>
+  <p class="opp">In-cycle notes that persist to the next cycle for the same users - begin knowledge capture</p>
+  <p class="opp">Evaluate access cleanup timing relative to late-cycle and post-cycle reporting needs</p>
+</div>
+
+</div><!-- /map -->
+</div><!-- /map-scroll -->
+</main>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════════════════════ -->
+<footer class="site-footer" role="contentinfo">
+  <div class="ft-copy">
+    VA Financial Services Center · SCIP User Research Study
+  </div>
+  <div class="ft-stats" role="list" aria-label="Research study statistics">
+    <div class="ft-stat" role="listitem" aria-label="9 Journey Stages">
+      <div class="ft-stat-n" aria-hidden="true">9</div>
+      <div class="ft-stat-l" aria-hidden="true">Journey Stages</div>
+    </div>
+    <div class="ft-stat" role="listitem" aria-label="15 Primary Findings">
+      <div class="ft-stat-n" aria-hidden="true">15</div>
+      <div class="ft-stat-l" aria-hidden="true">Primary Findings</div>
+    </div>
+    <div class="ft-stat" role="listitem" aria-label="7 Emergent Patterns">
+      <div class="ft-stat-n" aria-hidden="true">7</div>
+      <div class="ft-stat-l" aria-hidden="true">Emergent Patterns</div>
+    </div>
+    <div class="ft-stat" role="listitem" aria-label="35 or more Anchor Quotes">
+      <div class="ft-stat-n" aria-hidden="true">35+</div>
+      <div class="ft-stat-l" aria-hidden="true">Anchor Quotes</div>
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
