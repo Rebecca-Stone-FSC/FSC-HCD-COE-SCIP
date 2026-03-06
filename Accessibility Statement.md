@@ -22,20 +22,20 @@ All pairs verified using WCAG 2.1 relative luminance formula. All achieve AAA.
 
   Element                            Foreground   Background   Ratio    Level
   -----------------------------------------------------------------------------
-  Page title (H1) on header         #ffffff      #162e51      13.60:1  AAA
-  Eyebrow / labels on header        #d9e8f6      #162e51      10.90:1  AAA
-  Section banner labels             #d9e8f6      #1a4480       7.71:1  AAA
-  Cell body text on white           #1b1b1b      #ffffff      17.22:1  AAA
-  Cell body text on gray-pale       #1b1b1b      #f0f0f0      15.11:1  AAA
-  Text on delight / green bg        #1b1b1b      #ecf3ec      15.25:1  AAA
-  Text on friction / gold bg        #1b1b1b      #faf3d1      15.42:1  AAA
-  Text on pain / red bg             #1b1b1b      #f4e3db      13.83:1  AAA
-  Text on critical / pink bg        #1b1b1b      #f8dfe2      13.65:1  AAA
-  Opportunity text on cyan bg       #1b1b1b      #e7f6f8      15.59:1  AAA
-  Opportunity label on dark teal    #ffffff      #244e5e       9.03:1  AAA
-  Footer copy on navy               #dfe1e2      #162e51      10.37:1  AAA
-  Focus ring on dark backgrounds    #face00      #162e51       9.00:1  AAA
-  Legend label on dark strip        #d4b86a      #10223c       8.25:1  AAA
+ - Page title (H1) on header         #ffffff      #162e51      13.60:1  AAA
+ - Eyebrow / labels on header        #d9e8f6      #162e51      10.90:1  AAA
+ - Section banner labels             #d9e8f6      #1a4480       7.71:1  AAA
+ - Cell body text on white           #1b1b1b      #ffffff      17.22:1  AAA
+ - Cell body text on gray-pale       #1b1b1b      #f0f0f0      15.11:1  AAA
+ - Text on delight / green bg        #1b1b1b      #ecf3ec      15.25:1  AAA
+ - Text on friction / gold bg        #1b1b1b      #faf3d1      15.42:1  AAA
+ - Text on pain / red bg             #1b1b1b      #f4e3db      13.83:1  AAA
+ - Text on critical / pink bg        #1b1b1b      #f8dfe2      13.65:1  AAA
+ - Opportunity text on cyan bg       #1b1b1b      #e7f6f8      15.59:1  AAA
+ - Opportunity label on dark teal    #ffffff      #244e5e       9.03:1  AAA
+ - Footer copy on navy               #dfe1e2      #162e51      10.37:1  AAA
+ - Focus ring on dark backgrounds    #face00      #162e51       9.00:1  AAA
+ - Legend label on dark strip        #d4b86a      #10223c       8.25:1  AAA
 
 
 STRUCTURAL ACCESSIBILITY
